@@ -29,26 +29,36 @@ const markup = galleryItems.map((item) =>
 
 gallery.insertAdjacentHTML("beforeend", markup);
 
-gallery.addEventListener('click', e => {
+let instance;
+
+const openModal = (e => {
     e.preventDefault();
-
-    // console.log(e.target.tagName);
-
+  
     if (e.target.tagName != "IMG") {
         return;
     }
 
-    const instance = basicLightbox.create(`
+instance = basicLightbox.create(`
     <img src=${e.target.dataset.source} width="800" height="600">
-`);
+`, { onClose : (instance)  =>  {window.removeEventListener("keydown", closeModal)}
+   } 
+   );
 
 instance.show();
 
-window.addEventListener("keydown", e => {
-if (e.code === "Escape") {
-    instance.close();
-}
+const closeModal = (e => {
+  if (e.code === "Escape") {
+        instance.close();
+        window.removeEventListener("keydown", closeModal);
+        }
+ }
+);
 
-})
+window.addEventListener("keydown", closeModal);
 
-})
+});
+
+gallery.addEventListener('click', openModal);
+
+
+
