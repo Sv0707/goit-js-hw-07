@@ -13,15 +13,18 @@ const markup = galleryItems.map((item) =>
 
 gallery.insertAdjacentHTML("beforeend", markup);
 
-gallery.addEventListener('click', e => {
-    e.preventDefault();
+const lightbox = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionsData: "alt",
+    captionDelay: 250,
+});
 
-    if (e.target.tagName != "IMG") {
-        return;
-    }
+// gallery.addEventListener('click', e => {
+//     e.preventDefault();
 
-    const lightbox = new SimpleLightbox('.gallery a', {
-        captionsData: "alt",
-        captionDelay: 250,
-    });
-})
+//     if (e.target.tagName != "IMG") {
+//         return;
+//     }
+
+
+// })
